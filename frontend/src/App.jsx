@@ -8,9 +8,9 @@ import LoginPage from './pages/LoginPage'
 
 function Layout() {
   return (
-    <div>
+    <div className='flex flex-col h-screen justify-between'>
       <NavBar />
-      <main>
+      <main className='mb-auto w-10/12 max-w-4xl mx-auto'>
         <Outlet />
       </main>
       <Footer />
