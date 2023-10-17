@@ -5,10 +5,17 @@ import Footer from './layout/Footer'
 import LandingPage from './pages/LandingPage'
 import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
+import { ToastContainer } from 'react-toastify'
 
 function Layout() {
   return (
     <div className='flex flex-col h-screen justify-between'>
+      <ToastContainer
+        position='bottom-right'
+        theme='light'
+        pauseOnHover
+        autoClose={1500}
+      />
       <NavBar />
       <main className='mb-auto w-10/12 max-w-4xl mx-auto'>
         <Outlet />
