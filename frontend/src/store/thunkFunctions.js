@@ -18,3 +18,21 @@ export const registerUser = createAsyncThunk(
         }
     }
 )
+
+export const loginUser = createAsyncThunk(
+    // typePrefix
+    "user/loginUser",
+    // payloadCreator
+    async (body, thunkAPI) => {
+        try {
+            const response = await axiosInstance.post(
+                `/users/login`,
+                body
+            )
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.rejectWithValue(error.response.data || error.message);
+        }
+    }
+)
