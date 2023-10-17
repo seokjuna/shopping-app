@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 // 스키마 생성
 const userSchema = mongoose.Schema({

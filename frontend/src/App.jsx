@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage'
 import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
 import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function Layout() {
   return (
