@@ -21,7 +21,9 @@ mongoose.connect(process.env.MONGO_URI)
 
 // 일부러 에러 발생시키기
 app.get('/', (req, res, next) => {
-    setImmediate(() => { next(new Error('it is an error')) }); 
+    // setImmediate(() => { next(new Error('it is an error')) }); 
+    res.send('안녕하세요.');
+
 })
 
 app.post('/', (req, res) => { 
@@ -32,10 +34,10 @@ app.post('/', (req, res) => {
 app.use('/users', require('./routes/users'));
 
 // 에러 처리기
-app.use((error, req, res, next) => {
-    res.status(error.status || 500);
-    res.send(error.message || '서버에서 에러가 났습니다.');
-})
+// app.use((error, req, res, next) => {
+//     res.status(error.status || 500);
+//     res.send(error.message || '서버에서 에러가 났습니다.');
+// })
 
 app.use(express.static(path.join(__dirname, '../uploads')));
 
