@@ -19,13 +19,20 @@ mongoose.connect(process.env.MONGO_URI)
         console.log(err);
     })
 
-app.get('/', (req, res) => {
-    res.send('안녕하세요!');
+// 일부러 에러 발생시키기
+app.get('/', (req, res, next) => {
+    setImmediate(() => { next(new Error('it is an error')) }); 
 })
 
 app.post('/', (req, res) => { 
     console.log(req.body);
     res.json(req.body);
+})
+
+// 에러 처리기
+app.use((error, req, res, next) => {
+    res.status(err.status || 500);
+    res.send(error.message || '서버에서 에러가 났습니다.');
 })
 
 app.use(express.static(path.join(__dirname, '../uploads')));
