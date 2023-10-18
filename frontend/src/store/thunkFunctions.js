@@ -1,22 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axios";
 
-export const authUser = createAsyncThunk(
-    "user/authUser",
-    async (_, thunkAPI) => {
-        try {
-            const response = await axiosInstance.get(
-                `/users/auth`,
-            );
-            return response.data;
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error.response.data || error.message);
-        }
-    }
-)
-
 export const registerUser = createAsyncThunk(
-    // typePrefix
+    // type Prefix
     "user/registerUser",
     // payloadCreator
     async (body, thunkAPI) => {
@@ -46,6 +32,34 @@ export const loginUser = createAsyncThunk(
             return response.data;
         } catch (error) {
             console.log(error);
+            return thunkAPI.rejectWithValue(error.response.data || error.message);
+        }
+    }
+)
+
+export const authUser = createAsyncThunk(
+    "user/authUser",
+    async (_, thunkAPI) => {
+        try {
+            const response = await axiosInstance.get(
+                `/users/auth`,
+            );
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data || error.message);
+        }
+    }
+)
+
+export const logoutUser = createAsyncThunk(
+    "user/logoutUser",
+    async (_, thunkAPI) => {
+        try {
+            const response = await axiosInstance.post(
+                `/users/logout`,
+            );
+            return response.data;
+        } catch (error) {
             return thunkAPI.rejectWithValue(error.response.data || error.message);
         }
     }

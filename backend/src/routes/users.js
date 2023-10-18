@@ -51,5 +51,15 @@ router.post('/login', async (req, res, next) => {
     }
 })
 
+router.post('/logout', auth, async (req, res, next) => {
+    // 모델을 이용해서 유저 데이터를 저장
+    try {
+        return res.sendStatus(200);
+    } catch (error) {
+        next(error);
+    }
+})
+
+
 
 module.exports = router;

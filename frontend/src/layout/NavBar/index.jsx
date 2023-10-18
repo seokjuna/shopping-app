@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import NavItem from './Sections';
+import NavItem from './Sections/NavItem';
 
 const NavBar = () => {
   const [menu, setMenu] = useState(false);
@@ -32,7 +32,7 @@ const NavBar = () => {
         
         {/* mobile nav-items */}
         <div className='block sm:hidden'>
-          {menu && <NavItem />}
+          {menu && <NavItem mobile />}
         </div>
       </div>
     </section>
