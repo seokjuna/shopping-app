@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Sections = () => {
+const NavItem = () => {
   return (
-    <div>Sections</div>
+    <div>NavItem</div>
   )
 }
 
-export default Sections
+export default NavItem
