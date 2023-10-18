@@ -1,8 +1,9 @@
 import React from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
 
-function ProtectedRoutes() {
+function ProtectedRoutes({ isAuth }) {
   return (
-    <div>ProtectedRoutes</div>
+    isAuth ? <Outlet /> : <Navigate to={'/login'} />
   )
 }
 
