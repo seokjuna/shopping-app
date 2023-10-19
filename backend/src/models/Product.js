@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const { default: mongoose, Schema } = require("mongoose");
 
 // 스키마 생성
 const productSchema = mongoose.Schema({

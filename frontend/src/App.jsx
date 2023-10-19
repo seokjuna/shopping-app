@@ -58,7 +58,7 @@ function App() {
           <Route path='/product/upload' element={<UploadProductPage />} />
           <Route path='/product/:productId' element={<DetailProductPage />} />
           <Route path='/user/cart' element={<CartPage />} />
-          <Route path='/user/history' element={<HistoryPage />} />
+          <Route path='/history' element={<HistoryPage />} />
         </Route>
 
         {/* 로그인한 사람은 갈 수 없는 경로 */}
