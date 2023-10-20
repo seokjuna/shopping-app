@@ -4,6 +4,7 @@ import RadioBox from './Sections/RadioBox'
 import SearchInput from './Sections/SearchInput'
 import CardItem from './Sections/CardItem'
 import axiosInstance from '../../utils/axios'
+import { continents } from '../../utils/filterData'
 
 const LandingPage = () => {
   const limit = 4;
@@ -50,6 +51,23 @@ const LandingPage = () => {
     fetchProducts(body);
     setSkip(skip + limit);
   }
+  const handleFilters = (newFilteredData, category) => {
+    const newFilters = { ...filters };
+    newFilters[category] = newFilteredData;
+
+    showFilteredResults(newFilters);
+    setFilters(newFilters);
+  }
+  const showFilteredResults = (filters) => {
+    const body = {
+      skip: 0, // 처음부터 가져오기 위해
+      limit,
+      filters
+    }
+
+    fetchProducts(body);
+    setSkip(0);
+  }
 
   return (
     <section>
@@ -60,7 +78,11 @@ const LandingPage = () => {
       {/* Filter */}
       <div className='flex gap-3'>
         <div className='w-1/2'>
-          <CheckBox />
+          <CheckBox 
+            continents={continents} 
+            checkedContinents={filters.continents} 
+            onFilters={filters => handleFilters(filters, "continents")}
+          />
         </div>
         <div className='w-1/2'>
           <RadioBox />
