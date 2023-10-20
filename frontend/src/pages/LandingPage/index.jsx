@@ -8,6 +8,7 @@ import { continents, prices } from '../../utils/filterData'
 
 const LandingPage = () => {
   const limit = 4;
+  const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState([]);
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(false);
@@ -46,7 +47,8 @@ const LandingPage = () => {
       skip: skip + limit,
       limit,
       loadMore: true,
-      filters
+      filters,
+      searchTerm
     }
     fetchProducts(body);
     setSkip(skip + limit);
@@ -76,11 +78,23 @@ const LandingPage = () => {
     const body = {
       skip: 0, // 처음부터 가져오기 위해
       limit,
-      filters
+      filters,
+      searchTerm
     }
 
     fetchProducts(body);
     setSkip(0);
+  }
+  const handleSearchTerm = (e) => {
+    const body ={
+      skip: 0,
+      limit,
+      filters,
+      searchTerm: e.target.value
+    }
+    setSkip(0);
+    setSearchTerm(e.target.value);
+    fetchProducts(body);
   }
 
   return (
@@ -108,8 +122,12 @@ const LandingPage = () => {
       </div>
 
       {/* Search */}
-      <div className='flex justify-end'>
-        <SearchInput />
+      <div className='flex justify-end mb-3'>
+        <SearchInput 
+          searchTerm={searchTerm} 
+          onSearch={handleSearchTerm}
+          // setSearchTerm={setSearchTerm}
+        />
       </div>
 
       {/* Card */}
