@@ -44,7 +44,7 @@ const FileUpload = ({ onImageChange, images }) => {
 
             <div className='flex-grow h-[300px] flex border items-center justify-center overflow-x-scroll overflow-y-hidden'>
                 {images.map(image => (
-                    <div key={image} onClick={() => handleDelete()}>
+                    <div key={image} onClick={() => handleDelete(image)}>
                         <img 
                             className='min-w-[300px] h-[300px]'
                             src={`${import.meta.env.VITE_SERVER_URL}/${image}`}
