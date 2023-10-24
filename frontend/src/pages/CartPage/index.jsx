@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCartItems, removeCartItem } from '../../store/thunkFunctions';
+import { getCartItems, payProducts, removeCartItem } from '../../store/thunkFunctions';
 import CartTable from './Sections/CartTable';
 
 const CartPage = () => {
@@ -38,6 +38,10 @@ const CartPage = () => {
         dispatch(removeCartItem(proudctId));
     }
 
+    const handlePaymentClick = () => {
+        dispatch(payProducts({ cartDetail }));
+    }
+
     return (
         <section>
             <div className='text-center m-7'>
@@ -51,6 +55,7 @@ const CartPage = () => {
                         <p><span className='font-bold'>합계:</span> {total}원</p>
                         <button
                             className='text-white bg-black px-4 py-2 mt-5 rounded-md hover:bg-gray-500'
+                            onClick={handlePaymentClick}
                         >
                             결제하기
                         </button>

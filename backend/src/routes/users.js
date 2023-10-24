@@ -4,6 +4,9 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const Product = require('../models/Product');
+const Payment = require('../models/Payment');
+const crypto = require('crypto');
+const async = require('async');
 
 router.get('/auth', auth, async (req, res, next) => {
     // 데이터는 미들웨어에서 가져옴
@@ -140,6 +143,65 @@ router.delete('/cart', auth, async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+})
+
+router.post('/payment', auth, async (req, res) => {
+    // User Collection 안 History 필드 안에 간단한 결제 정보 넣어주기
+    let history = [];
+    let transactionData = {};
+
+    req.body.cartDetail.forEach((item) => {
+        history.push({
+            dateOfPurchase: new Date().toISOString(),
+            name: item.title,
+            id: item._id,
+            price: item.price,
+            quantity: item.quantity,
+            paymentId: crypto.randomUUID()
+        })
+    })
+
+    // Payment Collection 안에 자세한 결제 정보 넣어주기
+    transactionData.user = {
+        id: req.user._id,
+        name: req.user.name,
+        email: req.user.email
+    }
+
+    transactionData.product = history;
+
+    // history 정보 저장 (user collection)
+    // $each가 있어야 history 배열 안에 객체로 들어감
+    // $each가 없으면 배열 안에 배열에 생성
+    await User.findOneAndUpdate(
+        { _id: req.user._id },
+        { $push: { history: { $each: history } }, $set: { cart: [] } }
+    );
+
+    // payment에 transactioinData 정보 저장
+    const payment = new Payment(transactionData)
+    const paymentDocs = await payment.save();
+
+    // Product collection 안 sold 필드 업데이트
+    let products = [];
+    paymentDocs.product.forEach((item) => {
+        products.push({ id: item.id, quantity: item.quantity })
+    })
+
+    // eachSeries
+    async.eachSeries(products, async (item) => {
+        await Product.updateOne(
+            { _id: item.id },
+            {
+                $inc: {
+                    "sold": item.quantity
+                }
+            }
+        )
+    }, (err) => {
+        if(err) return res.status(500).json(err);
+        res.sendStatus(200);
+    })
 })
 
 module.exports = router;
