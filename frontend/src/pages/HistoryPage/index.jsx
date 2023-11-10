@@ -14,6 +14,7 @@ const HistoryPage = () => {
       <table className='w-full text-sm text-left text-gray-500'>
         <thead className='border-[1px]'>
           <tr>
+            <th>상품명</th>
             <th>주문 ID</th>
             <th>가격</th>
             <th>개수</th>
@@ -22,8 +23,9 @@ const HistoryPage = () => {
         </thead>
 
         <tbody>
-          {userData?.history?.map((item) => (
-            <tr key={item.id} className='border-b'>
+        {userData?.history?.map((item, index) => (
+            <tr key={`${item.id}_${index}`} className='border-b'>
+              <td>{item.name}</td>
               <td>{item.id}</td>
               <td>{item.price}</td>
               <td>{item.quantity}</td>
